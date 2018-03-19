@@ -15,7 +15,7 @@ int main(int argc, char const *argv[]) {
   double P0, TOL=0.00001;
   int N0 = 100000, rootIdx = 0;
   double root[10], delta = 5;
-  bool NoRoot = false, firstRoot = true;
+  bool NoRoot = true, firstRoot = true;
 
   // cout<<"Input P0."<<endl;
   // cin>>P0;
@@ -30,6 +30,7 @@ int main(int argc, char const *argv[]) {
         root[rootIdx] = P;
         cout<<"root "<<rootIdx+1<<" : "<<root[rootIdx]<<endl;
         firstRoot = false;
+        NoRoot = false;
       }
       if (abs(P-P0)<TOL && abs(P-root[rootIdx])>TOL) {
         rootIdx++;
@@ -38,8 +39,6 @@ int main(int argc, char const *argv[]) {
         break;
       }
       P0=P;
-      if(c1_derivation(P0)==0 || i==N0-1)
-        NoRoot = true;
     }
   }
 

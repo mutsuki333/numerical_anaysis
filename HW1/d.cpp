@@ -30,7 +30,7 @@ int main(int argc, char const *argv[]) {
   Diff G;
   int rootIdx = 0;
   double root[10], delta = 1;
-  bool NoRoot = false, firstRoot = true;
+  bool NoRoot = true, firstRoot = true;
 
   cout<<"Input highest power of the equation.\n";
   cin>>pow;
@@ -51,6 +51,7 @@ int main(int argc, char const *argv[]) {
         root[rootIdx] = P;
         cout<<"root "<<rootIdx+1<<" : "<<root[rootIdx]<<endl;
         firstRoot = false;
+        NoRoot = false;
       }
       if (abs(P-P0)<TOL && abs(P-root[rootIdx])>1) {
         rootIdx++;
@@ -59,8 +60,6 @@ int main(int argc, char const *argv[]) {
         break;
       }
       P0=P;
-      if(G.ff(P0)==0 || i==N-1)
-        NoRoot = true;
     }
   }
 
