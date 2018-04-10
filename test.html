@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+</html>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+'use strict';
+  class Diff {
+    constructor() {
+      this.pow = 0;
+      this.dpow = 0;
+      this.coef = new Array;
+      this.dcoef = new Array;
+    }
+    setPow(p){
+      this.pow = p;
+      this.dpow = p-1;
+      this.coef.length = p+1;
+      this.dcoef.length = p;
+    }
+    setCoefAt(i, c){
+      this.coef[i] = c;
+    }
+    diff(){
+      for (let i = 1; i <= this.pow; i++) {
+        this.dcoef[i-1] = i*this.coef[i];
+      }
+    }
+    f(p){
+      let value = 0.0;
+      for (let i = this.pow; i > 0; i--) {
+        value = (value+Number(this.coef[i]))*p;
+      }
+      value += Number(this.coef[0]);
+      return value;
+    }
+    ff(p){
+      let value = 0;
+      for (let i = this.pow; i > 0; i--) {
+        value = (value+Number(this.dcoef[i]))*p;
+      }
+      value += Number(this.dcoef[0]);
+      return value;
+    }
+  }
+
+  var G = new Diff;
+  function setP(){
+    G.setPow(document.getElementById("power").value);
+    let DOM = document.getElementById("coef input");
+    DOM.innerHTML = '';
+    for (let i = G.pow; i >= 0; i--) {
+      DOM.innerHTML+='<span>The '+i+'th coef:</span>\
+      <input id="coef'+i+'" type="text" name="coef" value=""><br>'
+    }
+    DOM.innerHTML+='<button type="button" name="setCoef" onclick="setC()">set</button>'
+  }
+  function setC(){
+    for (let i = 0; i <= G.pow; i++) {
+      G.setCoefAt(i, document.getElementById("coef"+i).value);
+    }
+    G.diff();
+    let rootIdx, root, delta = 100, NoRoot = true, firstRoot = true;
+    let P, P0 = -1000, TOL = 0.00001, N = 100000;
+
+    for (let i = -1000; i < 1000; i+=delta) {
+      P0 = i;
+      for (let j = 0; j < N; j++) {
+        P=P0-G.f(P0)/G.ff(P0);
+        if(firstRoot && Math.abs(P-P0)<TOL){
+          root[rootIdx] = P;
+          console.log("root "+(Number(rootIdx)+1)+" : "+root[rootIdx]);
+          //cout<<"root "<<rootIdx+1<<" : "<<root[rootIdx]<<endl;
+          firstRoot = false;
+          NoRoot = false;
+        }
+        if (Math.abs(P-P0)<TOL && Math.abs(P-root[rootIdx])>1) {
+          rootIdx++;
+          root[rootIdx] = P;
+          //cout<<"root "<<rootIdx+1<<" : "<<root[rootIdx]<<endl;
+          break;
+        }
+        P0=P;
+      }
+    }
+
+    //if(NoRoot)
+      //cout<<"Solution not found."<<endl;
+
+  }
+
+</script>
+
+<div class="container" style="text-align:center;">
+  <h2>Input highest power of the equation</h2>
+  <br>
+  <br>
+</div>
+<div class="form-group form-group-lg" style="text-align:center;">
+  <span>Power:</span><input id="power" type="text" name="power" value="">
+  <button type="button" name="setPower" onclick="setP()">set</button>
+  <div  class="container" style="text-align:center;" id="coef input">
+
+  </div>
+</div>
