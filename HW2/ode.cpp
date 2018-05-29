@@ -9,8 +9,8 @@ using namespace std;
 void Euler(double h,double w0=1,double T=40,double y=1,double y1=0){
   double A,B,A1,B1,y2,y3;  //Values to update
   ofstream file;
-  stringstream H;
-  H << fixed << setprecision(2) << h;
+  stringstream H; //Declare a stringstream
+  H << fixed << setprecision(2) << h; //set h into a 2 precision string
   file.open("Euler_"+H.str()+".txt");
   file<<"T\ty\twith\th="<<h<<"\n";
 
