@@ -4,15 +4,15 @@ import matplotlib.pyplot as plt
 
 # function that returns dy/dt
 def model(y,t):
-    k = 0.3
+    k = 1
     dydt = -k * y
     return dydt
 
 # initial condition
-y0 = 5
+y0 = 1
 
 # time points
-t = np.linspace(0,20)
+t = np.linspace(0,40)
 
 # solve ODE
 y = odeint(model,y0,t)
