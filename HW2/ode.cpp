@@ -63,6 +63,10 @@ int main(){
   cin>>method;
   cout<<"Input h = ";
   cin>>h;
+  cout<<"\nT = ";
+  cin>>T;
+  cout<<"\nw0 = ";
+  cin>>w0;
   if(method == 1){
     cout<<"Using the Euler Method with h="<<h<<", w0="<<w0<<", T="<<T<<endl;
     Euler(h);
