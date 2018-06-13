@@ -13,7 +13,7 @@ double Sphere_Area(double r, int n, int m){
   double N[3];
   ofstream file;
   file.open("Sphere_"+to_string(n)+"_"+to_string(m)+".stl");
-  file<<"solid shpere_"<<n<<"_"<<m<<"\n";
+  file<<"solid sphere_"<<n<<"_"<<m<<"\n";
   for (int i = 0; i < m; i++) {
     for (int j = 0; j < n; j++) {
       p1[0] = r*sin(j*a)*cos(i*b);
