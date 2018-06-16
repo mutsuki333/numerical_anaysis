@@ -1,4 +1,4 @@
-solid shpere_10_10
+solid sphere_10_10
 	facet normal 8.889881e-03 2.888497e-03 5.612850e-02
 		outer loop
 			vertex 0.000000e+00 0.000000e+00 1.000000e+00
